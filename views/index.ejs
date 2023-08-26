@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form onsubmit="fileUpload(event)">
+      <input type="file" id="files" multiple /><br />
+      <button type="submit">업로드</button>
+    </form>
+    <br />
+    <div class="result"></div>
+
+    <script>
+      const result = document.querySelector(".result");
+
+      async function fileUpload(e) {
+        e.preventDefault();
+        // 파일에 접근
+        const file = document.querySelector("#files");
+        console.log(file.files);
+        // 폼 데이터 생성
+        const formData = new FormData();
+        // 파일이 여러개라 반복문을 사용한다.
+        // for (let i = 0; i < file.files.length; i++) {
+        //   formData.append("files", file.files[i]);
+        // }
+        file.files.forEach((file) => {
+          formData.append("files", file);
+        });
+
+        try {
+          const res = await axios({
+            method: "post",
+            url: "/upload",
+            data: formData,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          res.data.forEach((elem) => {
+            // resultBox.innerHTML += `<img src="${elem.path}" style="width:500px">`;
+            const img = document.createElement("img");
+            img.src = elem.location; // aws 의 경로는 location
+            img.style.width = "500px";
+            resultBox.appendChild(img);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
