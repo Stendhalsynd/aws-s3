@@ -42,7 +42,7 @@
             },
           });
           res.data.forEach((elem) => {
-            // resultBox.innerHTML += `<img src="${elem.path}" style="width:500px">`;
+            result.innerHTML += `<img src="${elem.path}" style="width:500px">`;
             const img = document.createElement("img");
             img.src = elem.location; // aws 의 경로는 location
             img.style.width = "500px";
