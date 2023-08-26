@@ -5,7 +5,7 @@ const multer = require("multer");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-const PORT = 8000;
+const PORT = 3000;
 
 // view engine 설정
 app.set("view engine", "ejs");
